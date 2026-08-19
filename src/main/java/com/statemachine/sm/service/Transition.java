@@ -1,6 +1,6 @@
-package com.java.user.statemachine;
+package com.statemachine.sm.service;
 
-import com.java.user.statemachine.transaction.AccountDto;
+import com.statemachine.sm.service.transaction.AccountDto;
 
 public interface Transition<T> {
 

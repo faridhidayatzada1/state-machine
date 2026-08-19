@@ -1,16 +1,16 @@
-package com.java.user.statemachine;
+package com.statemachine.sm.service;
 
-import com.java.user.statemachine.transaction.Approve;
-import com.java.user.statemachine.transaction.Notify;
-import com.java.user.statemachine.transaction.Reject;
-import com.java.user.statemachine.transaction.Submit;
+import com.statemachine.sm.service.transaction.Approve;
+import com.statemachine.sm.service.transaction.Notify;
+import com.statemachine.sm.service.transaction.Reject;
+import com.statemachine.sm.service.transaction.Submit;
 
 import java.util.Arrays;
 import java.util.List;
 
 public enum AccountStatus {
 
-    DRAFT(Submit.Name),
+    DRAFT(Submit.NAME),
     IN_REVIEW(Approve.NAME, Reject.NAME),
     APPROVED(Approve.NAME, Notify.NAME),
     NOTIFIED();
