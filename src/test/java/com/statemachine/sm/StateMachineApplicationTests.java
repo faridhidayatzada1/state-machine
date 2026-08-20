@@ -1,4 +1,4 @@
-package com.java.user.statemachine;
+package com.statemachine.sm;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

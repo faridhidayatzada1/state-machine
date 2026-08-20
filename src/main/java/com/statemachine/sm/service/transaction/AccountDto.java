@@ -1,6 +1,6 @@
-package com.java.user.statemachine.sm.transaction;
+package com.statemachine.sm.service.transaction;
 
-import com.java.user.statemachine.sm.AccountStatus;
+import com.statemachine.sm.service.AccountStatus;
 import lombok.Data;
 
 @Data

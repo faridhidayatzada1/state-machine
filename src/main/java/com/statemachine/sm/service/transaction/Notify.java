@@ -1,7 +1,7 @@
-package com.java.user.statemachine.sm.transaction;
+package com.statemachine.sm.service.transaction;
 
-import com.java.user.statemachine.sm.AccountStatus;
-import com.java.user.statemachine.sm.Transition;
+import com.statemachine.sm.service.AccountStatus;
+import com.statemachine.sm.service.Transition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +23,6 @@ public class Notify implements Transition<AccountDto> {
 
     @Override
     public void applyProcessing(AccountDto accountDto) {
-        log.info("Account is transitioning to notification state {}", accountDto.getId());
+        log.info("Account is transitioning to notification {}, {}",NAME, accountDto.getId());
     }
 }
