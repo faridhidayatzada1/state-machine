@@ -25,9 +25,16 @@ public class StateMachineApplication implements CommandLineRunner {
         Account account = new Account();
         account.setIban("123345");
         account.setName("Test");
-        account.setAccountStatus(AccountStatus.IN_REVIEW);
+        account.setAccountStatus(AccountStatus.DRAFT);
         account.setType("SAVING");
         accountRepository.save(account);
-        transactionService.getAllowedTransitions(1L).forEach(System.out::println);
+
+        transactionService.transaction(account.getId(), "submit");
+        transactionService.transaction(account.getId(), "approve");
+        transactionService.transaction(account.getId(), "approve");
+        transactionService.transaction(account.getId(), "approve");
+        transactionService.transaction(account.getId(), "approve");
+        transactionService.transaction(account.getId(), "notify");
+        //transactionService.transaction(account.getId(), "notify");
     }
 }

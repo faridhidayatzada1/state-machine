@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 public enum Errors implements ErrorResponse {
     ACCOUNT_NOT_FOUND("Account not found", HttpStatus.NOT_FOUND, "Account with {id} not found"),
     INVALID_ACCOUNT_STATUS("Invalid account status", HttpStatus.BAD_REQUEST, "Account with {id} has invalid status"),
-    INVALID_TRANSACTION("Invalid transaction", HttpStatus.BAD_REQUEST, "Transaction with {id} is invalid");
+    ACCOUNT_CANT_MAKE_TRANSACTION("Account cannot make transaction", HttpStatus.BAD_REQUEST, "Account with {id} cannot make the specified transaction");
 
     String message;
     String key;

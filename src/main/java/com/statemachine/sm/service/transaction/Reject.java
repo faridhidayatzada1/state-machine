@@ -23,6 +23,6 @@ public class Reject implements Transition<AccountDto> {
 
     @Override
     public void applyProcessing(AccountDto accountDto) {
-        log.info("Account is transitioning to rejected state {}", accountDto.getId());
+        log.info("Account is transitioning to rejected state {}, {}",NAME, accountDto.getId());
     }
 }

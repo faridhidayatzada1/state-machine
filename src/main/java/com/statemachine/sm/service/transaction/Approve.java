@@ -23,6 +23,6 @@ public class Approve implements Transition<AccountDto> {
 
     @Override
     public void applyProcessing(AccountDto accountDto) {
-        log.info("Account is transitioning to approved state {}", accountDto.getId());
+        log.info("Account is transitioning to approved state {}, {}",NAME, accountDto.getId());
     }
 }

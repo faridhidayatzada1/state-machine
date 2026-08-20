@@ -23,6 +23,6 @@ public class Submit implements Transition<AccountDto> {
 
     @Override
     public void applyProcessing(AccountDto accountDto) {
-        log.info("Account is transitioning to in review state {}", accountDto.getId());
+        log.info("Account is transitioning to in review state {}, {}",NAME, accountDto.getId());
     }
 }

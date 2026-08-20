@@ -23,6 +23,6 @@ public class Notify implements Transition<AccountDto> {
 
     @Override
     public void applyProcessing(AccountDto accountDto) {
-        log.info("Account is transitioning to notification state {}", accountDto.getId());
+        log.info("Account is transitioning to notification {}, {}",NAME, accountDto.getId());
     }
 }
