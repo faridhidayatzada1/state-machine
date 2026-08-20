@@ -23,7 +23,7 @@ public class StateMachineApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Account account = new Account();
-        account.setIban("123345");
+        account.setIban("123456");
         account.setName("Test");
         account.setAccountStatus(AccountStatus.DRAFT);
         account.setType("SAVING");
