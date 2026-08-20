@@ -4,15 +4,16 @@ import com.statemachine.sm.config.ModelMapperConfig;
 import com.statemachine.sm.domain.Account;
 import com.statemachine.sm.errors.ApplicationException;
 import com.statemachine.sm.errors.Errors;
+import com.statemachine.sm.listeners.AccountTransitionEvent;
 import com.statemachine.sm.repository.AccountRepository;
 import com.statemachine.sm.service.transaction.AccountDto;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,10 +27,10 @@ public class TransactionServiceImplement implements TransactionService<AccountDt
     private final AccountRepository accountRepository;
     private final ModelMapperConfig modelMapper;
     private final List<Transition<AccountDto>> transitions; // ← Spring inject edir
+    private final ApplicationEventPublisher eventPublisher;
 
     // transactionMap artıq field deyil
     private Map<String, Transition<AccountDto>> transactionMap;
-
     @PostConstruct
     public void init() {
         this.transactionMap = transitions.stream()
@@ -41,11 +42,10 @@ public class TransactionServiceImplement implements TransactionService<AccountDt
     public AccountDto transaction(Long id, String transStr) {
        validateTransaction(transStr);
        Account account = retrieveAccount(id);
-        System.out.println("account " + account);
        final Transition<AccountDto> transaction = getTransaction(id, transStr);
-        System.out.println("transaction " + transaction);
        transaction.applyProcessing(modelMapper.modelMapper().map(account, AccountDto.class));
        final Account updatedAccount = updateStatus(account, transaction, transaction.getTargetStatus());
+
        return modelMapper.modelMapper().map(updatedAccount, AccountDto.class);
     }
 
@@ -83,8 +83,12 @@ public class TransactionServiceImplement implements TransactionService<AccountDt
     }
     private Account updateStatus(Account account, Transition<AccountDto> transaction, AccountStatus targetStatus) {
         log.trace("Updating account status for account {} to transaction {}: {}", account.getId(), transaction, targetStatus);
+        AccountStatus accountStatus  = account.getAccountStatus();
         account.setAccountStatus(targetStatus);
-        return accountRepository.save(account);
+        final Account updateAccount = accountRepository.save(account);
+        final AccountDto accountDto = modelMapper.modelMapper().map(account, AccountDto.class);
+        eventPublisher.publishEvent(new AccountTransitionEvent(this, accountDto, accountStatus, transaction.getName()));
+        return updateAccount;
     }
 
 
